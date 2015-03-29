@@ -1,10 +1,8 @@
 import unittest
+from red_line_promotion import price_changed
 
 def always_passing_test():
   assert True
-
-def price_changed(from_price, to_price):
-    pass
 
 class given_a_good_with_no_price_change_ever(unittest.TestCase):
     def setUp(self):
