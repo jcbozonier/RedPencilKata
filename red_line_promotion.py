@@ -1,2 +1,2 @@
 def price_changed(from_price, to_price):
-    pass
+    return to_price/from_price == 0.95
