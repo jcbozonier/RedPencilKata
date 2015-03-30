@@ -56,9 +56,10 @@ class given_a_good_price(unittest.TestCase):
 
 class given_a_good_in_a_red_pencil_promotion(unittest.TestCase):
     def setUp(self):
-        self.last_price_change_date = datetime.datetime.strptime('2015-02-26 11:59:59', '%Y-%m-%d %H:%M:%S')
-        self.todays_date = datetime.datetime.strptime('2015-03-29 12:14:12', '%Y-%m-%d %H:%M:%S')
-        self.original_good_price = 200.00
-        self.reduced_good_price = reduce_price_of(self.original_good_price, by=0.30)
+        self.good = new Good(price = 200.00)
+        self.good.reduce_price(by=0.05, effective=datetime.datetime.strptime('2015-02-26 11:59:59', '%Y-%m-%d %H:%M:%S'))
+        self.good.reduce_price(by=0.30, effective=datetime.datetime.strptime('2015-03-29 12:14:12', '%Y-%m-%d %H:%M:%S'))
+
     def test_when_overall_price_reduction_is_more_than_30_percent(self):
-        assert False, "No way to encapsulate this without refactoring."
+        self.good.reduce_price(by=0.10, effective=datetime.datetime.strptime('2015-03-29 13:14:12', '%Y-%m-%d %H:%M:%S'))
+        self.assertFalse(self.good.redline_promotion_effective_for(datetime.datetime.strptime('2015-03-29 13:14:12', '%Y-%m-%d %H:%M:%S'))), "It should not still be under a redline promotion."
