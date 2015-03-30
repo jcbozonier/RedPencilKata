@@ -1,8 +1,5 @@
 import unittest, datetime
-from red_line_promotion import price_changed
-
-def reduce_price_of(original_price, by):
-    return (1-by)*original_price
+from red_line_promotion import *
 
 def always_passing_test():
   assert True
