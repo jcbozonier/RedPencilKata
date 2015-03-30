@@ -13,8 +13,17 @@ class Good():
         self.price = price
         self.price_reduction_history = []
     def reduce_price(self, by, effective=datetime.datetime.now()):
-        self.reduced_price = reduce_price_of(self.price, by=by)
+        current_price = self.get_price(effective)
+        self.reduced_price = reduce_price_of(current_price, by=by)
         self.price_reduction_history.append((by, self.reduced_price, effective))
         return price_changed(self.price, self.reduced_price, todays_date=effective, last_price_change_date=self.price_reduction_history[0][2])
     def is_redline_promotion_effective_now(self):
         return price_changed(self.price, self.reduced_price)
+    def get_price(self, effective):
+        most_recent_price_found = self.price
+        for item in self.price_reduction_history:
+            if item[2] <= effective:
+                most_recent_price_found = item[1]
+            else:
+                break
+        return most_recent_price_found
