@@ -53,3 +53,12 @@ class given_a_good_price(unittest.TestCase):
         good_price = 100.00
         reduced_price = reduce_price_of(good_price, by=0.05)
         self.assertEqual(reduced_price, 95.00, "It should reduce the price by the percentage amount.")
+
+class given_a_good_in_a_red_pencil_promotion(unittest.TestCase):
+    def setUp(self):
+        self.last_price_change_date = datetime.datetime.strptime('2015-02-26 11:59:59', '%Y-%m-%d %H:%M:%S')
+        self.todays_date = datetime.datetime.strptime('2015-03-29 12:14:12', '%Y-%m-%d %H:%M:%S')
+        self.original_good_price = 200.00
+        self.reduced_good_price = reduce_price_of(self.original_good_price, by=0.30)
+    def test_when_overall_price_reduction_is_more_than_30_percent(self):
+        assert False, "No way to encapsulate this without refactoring."
