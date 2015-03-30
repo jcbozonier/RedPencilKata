@@ -25,14 +25,14 @@ class given_a_good_with_multiple_price_changes_one_yesterday_one_today(unittest.
         self.yesterday = datetime.datetime.strptime('2015-03-28 12:14:12', '%Y-%m-%d %H:%M:%S')
         self.today = datetime.datetime.strptime('2015-03-29 12:14:12', '%Y-%m-%d %H:%M:%S')
         self.good = Good(price=100.00)
-        self.good.reduce_price(by=0.30, effective=self.yesterday)
-        self.good.reduce_price(by=0.20, effective=self.today)
+        self.good.reduce_price(by=0.05, effective=self.yesterday)
+        self.good.reduce_price(by=0.1, effective=self.today)
     def test_when_price_is_calculated_for_yesterday(self):
         good_price = self.good.get_price(effective=self.yesterday)
-        self.assertEqual(good_price, 70.00, "It should have only the inital price reduction.")
+        self.assertEqual(good_price, 95.00, "It should have only the inital price reduction.")
     def test_when_price_is_calculated_for_today(self):
         good_price = self.good.get_price(effective=self.today)
-        self.assertEqual(good_price, 56.00, "It should compound the price reductions.")
+        self.assertEqual(good_price, 85.50, "It should compound the price reductions.")
 
 class given_a_good_with_a_price_change_in_the_last_thirty_days(unittest.TestCase):
     def setUp(self):
