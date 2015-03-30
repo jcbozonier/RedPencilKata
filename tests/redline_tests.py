@@ -1,7 +1,7 @@
 import unittest, datetime
 from red_line_promotion import price_changed
 
-def reduce_price(original_price, by):
+def reduce_price_of(original_price, by):
     return (1-by)*original_price
 
 def always_passing_test():
@@ -16,15 +16,15 @@ class given_a_good_with_no_price_change_ever(unittest.TestCase):
         self.assertFalse(red_line_promotion_started, "It should not start a red line promotion.")
     def test_when_price_is_reduced_by_5_percent(self):
         red_line_promotion_started = price_changed(from_price=self.original_good_price,
-                                                   to_price = reduce_price(self.original_good_price, by=0.05))
+                                                   to_price = reduce_price_of(self.original_good_price, by=0.05))
         self.assertTrue(red_line_promotion_started, "It should start a red line promotion.")
     def test_when_price_is_reduced_by_30_percent(self):
         red_line_promotion_started = price_changed(from_price=self.original_good_price,
-                                                   to_price=reduce_price(self.original_good_price, by=0.30))
+                                                   to_price=reduce_price_of(self.original_good_price, by=0.30))
         self.assertTrue(red_line_promotion_started, "It should start a red line promotion.")
     def test_when_price_is_reduced_by_5_percent_to_30_percent(self):
         red_line_promotion_started = price_changed(from_price=self.original_good_price,
-                                                   to_price=reduce_price(self.original_good_price, by=0.10))
+                                                   to_price=reduce_price_of(self.original_good_price, by=0.10))
         self.assertTrue(red_line_promotion_started, "It should start a red line promotion.")
 
 class given_a_good_with_a_price_change_in_the_last_thirty_days(unittest.TestCase):
@@ -34,7 +34,7 @@ class given_a_good_with_a_price_change_in_the_last_thirty_days(unittest.TestCase
         self.original_good_price = 200.00
     def test_when_price_is_reduced_by_5_percent(self):
         red_line_promotion_started = price_changed(from_price = self.original_good_price,
-                                                   to_price = reduce_price(self.original_good_price, by=0.05),
+                                                   to_price = reduce_price_of(self.original_good_price, by=0.05),
                                                    todays_date = self.todays_date,
                                                    last_price_change_date=self.last_price_change_date)
         self.assertFalse(red_line_promotion_started, "It should NOT start a red line promotion.")
@@ -42,5 +42,5 @@ class given_a_good_with_a_price_change_in_the_last_thirty_days(unittest.TestCase
 class given_a_good_price(unittest.TestCase):
     def test_when_reduced_by_some_percentage(self):
         good_price = 100.00
-        reduced_price = reduce_price(good_price, by=0.05)
+        reduced_price = reduce_price_of(good_price, by=0.05)
         self.assertEqual(reduced_price, 95.00, "It should reduce the price by the percentage amount.")
