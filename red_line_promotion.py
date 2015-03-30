@@ -11,7 +11,10 @@ def reduce_price_of(original_price, by):
 class Good():
     def __init__(self, price):
         self.price = price
-    def reduce_price(self, by):
+        self.price_reduction_history = []
+    def reduce_price(self, by, effective=datetime.datetime.now()):
         self.reduced_price = reduce_price_of(self.price, by=by)
+        self.price_reduction_history.append((by, self.reduced_price, effective))
+        return price_changed(self.price, self.reduced_price, todays_date=effective, last_price_change_date=self.price_reduction_history[0][2])
     def is_redline_promotion_effective_now(self):
         return price_changed(self.price, self.reduced_price)
