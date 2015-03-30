@@ -15,13 +15,11 @@ class given_a_good_with_no_price_change_ever(unittest.TestCase):
         self.good.reduce_price(by=0.05)
         self.assertTrue(self.good.is_redline_promotion_effective_now(), "It should start a red line promotion.")
     def test_when_price_is_reduced_by_30_percent(self):
-        red_line_promotion_started = price_changed(from_price=self.original_good_price,
-                                                   to_price=reduce_price_of(self.original_good_price, by=0.30))
-        self.assertTrue(red_line_promotion_started, "It should start a red line promotion.")
+        self.good.reduce_price(by=0.30)
+        self.assertTrue(self.good.is_redline_promotion_effective_now(), "It should start a red line promotion.")
     def test_when_price_is_reduced_by_5_percent_to_30_percent(self):
-        red_line_promotion_started = price_changed(from_price=self.original_good_price,
-                                                   to_price=reduce_price_of(self.original_good_price, by=0.10))
-        self.assertTrue(red_line_promotion_started, "It should start a red line promotion.")
+        self.good.reduce_price(by=0.10)
+        self.assertTrue(self.good.is_redline_promotion_effective_now(), "It should start a red line promotion.")
 
 class given_a_good_with_a_price_change_in_the_last_thirty_days(unittest.TestCase):
     def setUp(self):
