@@ -39,6 +39,18 @@ class given_a_good_with_a_price_change_in_the_last_thirty_days(unittest.TestCase
                                                    last_price_change_date=self.last_price_change_date)
         self.assertFalse(red_line_promotion_started, "It should NOT start a red line promotion.")
 
+class given_a_good_with_a_price_change_before_the_last_thirty_days(unittest.TestCase):
+    def setUp(self):
+        self.last_price_change_date = datetime.datetime.strptime('2015-02-26 11:59:59', '%Y-%m-%d %H:%M:%S')
+        self.todays_date = datetime.datetime.strptime('2015-03-29 12:14:12', '%Y-%m-%d %H:%M:%S')
+        self.original_good_price = 200.00
+    def test_when_price_is_reduced_by_5_percent(self):
+        red_line_promotion_started = price_changed(from_price = self.original_good_price,
+                                                   to_price = reduce_price_of(self.original_good_price, by=0.05),
+                                                   todays_date = self.todays_date,
+                                                   last_price_change_date=self.last_price_change_date)
+        self.assertTrue(red_line_promotion_started, "It should start a red line promotion.")
+
 class given_a_good_price(unittest.TestCase):
     def test_when_reduced_by_some_percentage(self):
         good_price = 100.00
